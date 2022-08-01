@@ -19,10 +19,10 @@ import { reducers, metaReducers } from './store/reducers'
 import { registerLocaleData } from '@angular/common'
 import { default as localeEn } from '@angular/common/locales/en'
 import { NZ_I18N, en_US as localeZorro, en_US } from 'ng-zorro-antd/i18n'
+import { NgxsModule } from '@ngxs/store'
+import { SettingState } from './store/setting_ngxs/setting.state.'
 
-const LOCALE_PROVIDERS = [
-  { provide: NZ_I18N, useValue: en_US },
-]
+const LOCALE_PROVIDERS = [{ provide: NZ_I18N, useValue: en_US }]
 registerLocaleData(localeEn, 'en')
 
 @NgModule({
@@ -38,7 +38,8 @@ registerLocaleData(localeEn, 'en')
     // ngrx
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
-
+    // ngxs
+    NgxsModule.forRoot([SettingState]),
     // nprogress
     NgProgressModule.withConfig({
       thick: true,
@@ -47,7 +48,6 @@ registerLocaleData(localeEn, 'en')
     }),
     NgProgressRouterModule,
     NgProgressHttpModule,
-
   ],
   providers: [
     // locale providers
@@ -55,5 +55,4 @@ registerLocaleData(localeEn, 'en')
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
