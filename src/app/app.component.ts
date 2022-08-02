@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import qs from 'qs'
 import { Router, NavigationEnd, ActivatedRoute, NavigationStart } from '@angular/router'
@@ -13,8 +13,6 @@ import english from './locales/en-US'
 import french from './locales/fr-FR'
 import russian from './locales/ru-RU'
 import chinese from './locales/zh-CN'
-import { DOCUMENT } from '@angular/common'
-import { SharedService } from './services/shared.service'
 import { SetStateActionNgxs } from './store/setting_ngxs/actions'
 
 const locales = {
@@ -38,14 +36,11 @@ export class AppComponent implements OnInit {
   logo: String
   pageTitle: String = ''
   firstTouch: boolean = false
-  lang: string
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
-    @Inject(DOCUMENT) private document: Document,
-    private SharedService: SharedService,
     private store: Store,
     translate: TranslateService,
   ) {
@@ -55,18 +50,25 @@ export class AppComponent implements OnInit {
     translate.setDefaultLang('en-US')
 
     // localization && theme listener
-    // this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
-    //   this.lang = state.locale
-    //   if (this._locale !== state.locale) {
-    //     this.changeCssFile(state.locale)
-    //     translate.use(state.locale)
-    //   }
-    //   if (this._theme !== state.theme) {
-    //     this.setTheme(state.theme)
-    //   }
-    //   this._locale = state.locale
-    //   this._theme = state.theme
-    // })
+
+    this.store
+      .select(state => state.setting)
+      .subscribe(data => {
+        const state = data.setting
+        if (this._locale !== state.locale) {
+          translate.use(state.locale)
+        }
+        if (this._theme !== state.theme) {
+          this.setTheme(state.theme)
+        }
+        if (this._version !== state.version) {
+          this.setVersion(state.version)
+        }
+        this._locale = state.locale
+        this._theme = state.theme
+        this.logo = state.logo
+        this.setTitle()
+      })
   }
 
   ngOnInit() {
@@ -101,7 +103,6 @@ export class AppComponent implements OnInit {
       .subscribe((event: NavigationStart) => {
         const queryString = event.url.match(/\?(.*)/)
         if (queryString) {
-          console.log('aassaas')
           const queryParams = qs.parse(queryString[1])
           console.log(queryParams)
           const keys = Object.keys(queryParams)
@@ -132,7 +133,6 @@ export class AppComponent implements OnInit {
 
     // detecting & set mobile/tablet/desktop viewports
     const setViewPort = (isMobileView: any = false, isTabletView: any = false) => {
-      console.log(isMobileView)
       this.store.dispatch(
         new SetStateActionNgxs({
           isMobileView,
@@ -156,6 +156,7 @@ export class AppComponent implements OnInit {
       }
       if (_isTabletView && !_isMobileView && (_isTabletView !== isTabletView || load)) {
         setViewPort(false, true)
+
         this.store.dispatch(
           new SetStateActionNgxs({
             isMenuCollapsed: true,
@@ -198,22 +199,6 @@ export class AppComponent implements OnInit {
     primaryColor()
   }
 
-  changeCssFile(lang: string) {
-    const headTag = this.document.getElementsByTagName('head')[0] as HTMLHeadElement
-    const existingLink = this.document.getElementById('langCss') as HTMLLinkElement
-    const bundleName = lang === 'en-US' ? 'global.css' : 'global-ar.css'
-    if (existingLink) {
-      existingLink.href = bundleName
-    } else {
-      const newLink = this.document.createElement('link')
-      newLink.rel = 'stylesheet'
-      newLink.type = 'text/css'
-      newLink.id = 'langCss'
-      newLink.href = bundleName
-      headTag.appendChild(newLink)
-    }
-  }
-
   // set title
   setTitle = () => {
     this.titleService.setTitle(`${this.logo} | ${this.pageTitle}`)
@@ -221,17 +206,17 @@ export class AppComponent implements OnInit {
 
   // set version
   setVersion = version => {
-    this.document.querySelector('html').setAttribute('data-vb-version', version)
+    document.querySelector('html').setAttribute('data-vb-version', version)
   }
 
   // set theme
   setTheme = theme => {
     if (this.firstTouch) {
-      this.document.querySelector('html').setAttribute('data-vb-theme', theme)
+      document.querySelector('html').setAttribute('data-vb-theme', theme)
       if (theme === 'default') {
         this.store.dispatch(
           new SetStateActionNgxs({
-            menuColor: 'dark',
+            menuColor: 'white',
           }),
         )
       }

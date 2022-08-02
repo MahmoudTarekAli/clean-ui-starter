@@ -3,7 +3,7 @@ import * as actions from './actions'
 
 const STORED_SETTINGS = (storedSettings: object) => {
   const settings = {}
-  Object.keys(storedSettings).forEach((key) => {
+  Object.keys(storedSettings).forEach(key => {
     const item = store.get(`app.settings.${key}`)
     settings[key] = typeof item !== 'undefined' ? item : storedSettings[key]
   })
@@ -17,7 +17,7 @@ export const initialState: object = {
     authProvider: 'jwt',
     logo: 'Visual Builder',
     version: 'fluent',
-    theme: 'waves',
+    theme: 'default',
     locale: 'en-US',
     isSidebarOpen: false,
     isSupportChatOpen: false,
@@ -25,10 +25,10 @@ export const initialState: object = {
     isMobileMenuOpen: false,
     isMenuCollapsed: false,
     isPreselectedOpen: false,
-    preselectedVariant: 'waves',
+    preselectedVariant: 'default',
     menuLayoutType: 'left',
     routerAnimation: 'slide-fadein-up',
-    menuColor: 'dark',
+    menuColor: 'gray',
     authPagesColor: 'gray',
     isAuthTopbar: true,
     primaryColor: '#4b7cf3',
@@ -48,7 +48,7 @@ export const initialState: object = {
     layoutTopbar: 'v1',
     layoutBreadcrumbs: 'v1',
     layoutFooter: 'v1',
-    flyoutMenuType: 'default',
+    flyoutMenuType: 'flyout',
     flyoutMenuColor: 'blue',
 
     // VB:REPLACE-END:SETTINGS
@@ -63,7 +63,7 @@ export function reducer(state = initialState, action: actions.Actions): object {
       return { ...state, ...action.payload }
     case actions.CHANGE_SETTING_BULK:
       const settings = {}
-      Object.keys(action.payload).forEach((key) => {
+      Object.keys(action.payload).forEach(key => {
         store.set(`app.settings.${key}`, action.payload[key])
         settings[key] = action.payload[key]
       })

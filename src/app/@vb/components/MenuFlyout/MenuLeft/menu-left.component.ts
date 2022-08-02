@@ -73,26 +73,6 @@ export class MenuFlyoutLeftComponent implements OnInit {
           !state.isMobileView
         console.log(state)
       })
-    // this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
-    //   this.logo = state.logo
-    //   this.version = state.version
-    //   this.description = state.description
-    //   this.isMobileView = state.isMobileView
-    //   this.isMobileMenuOpen = state.isMobileMenuOpen
-    //   this.isMenuCollapsed = state.isMenuCollapsed
-    //   this.isMenuUnfixed = state.isMenuUnfixed
-    //   this.isMenuShadow = state.isMenuShadow
-    //   this.flyoutMenuType = state.flyoutMenuType
-    //   this.menuColor = state.menuColor
-    //   this.flyoutMenuColor = state.flyoutMenuColor
-    //   this.menuLayoutType = state.menuLayoutType
-    //   this.isSidebarOpen = state.isSidebarOpen
-    //   this.flyoutActive =
-    //     (state.flyoutMenuType === 'flyout' ||
-    //       state.flyoutMenuType === 'compact' ||
-    //       state.isMenuCollapsed) &&
-    //     !state.isMobileView
-    // })
     this.setActiveItems(this.router.url)
     this.router.events
       .pipe(filter(event => event instanceof NavigationStart))
@@ -103,7 +83,7 @@ export class MenuFlyoutLeftComponent implements OnInit {
 
   toggleMobileMenu() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isMobileMenuOpen: !this.isMobileMenuOpen,
       }),
     )

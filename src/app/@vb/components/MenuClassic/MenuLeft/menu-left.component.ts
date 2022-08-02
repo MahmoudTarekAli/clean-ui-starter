@@ -2,10 +2,11 @@ import { Component, OnInit, Input } from '@angular/core'
 import { Router, NavigationStart } from '@angular/router'
 import { filter } from 'rxjs/operators'
 import * as _ from 'lodash'
-import { select, Store } from '@ngrx/store'
+import { Select, Store } from '@ngxs/store'
 import { MenuService } from 'src/app/services/menu'
 import * as SettingsActions from 'src/app/store/settings/actions'
 import * as Reducers from 'src/app/store/reducers'
+import { SetStateActionNgxs } from '../../../../store/setting_ngxs/actions'
 
 @Component({
   selector: 'vb-menu-classic-left',
@@ -25,18 +26,22 @@ export class MenuClassicLeftComponent implements OnInit {
   menuDataActivated: any[]
   role: String
 
-  constructor(private menuService: MenuService, private store: Store<any>, private router: Router) {
+  constructor(private menuService: MenuService, private store: Store, private router: Router) {
     this.menuService.getMenuData().subscribe(menuData => (this.menuData = menuData))
-    this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
-      this.menuColor = state.menuColor
-      this.isMenuShadow = state.isMenuShadow
-      this.isMenuUnfixed = state.isMenuUnfixed
-      this.isSidebarOpen = state.isSidebarOpen
-      this.isMobileView = state.isMobileView
-      this.leftMenuWidth = state.leftMenuWidth
-      this.isMenuCollapsed = state.isMenuCollapsed
-      this.logo = state.logo
-    })
+    this.store
+      .select(state => state.setting)
+      .subscribe(data => {
+        const state = data.setting
+        this.menuColor = state.menuColor
+        this.isMenuShadow = state.isMenuShadow
+        this.isMenuUnfixed = state.isMenuUnfixed
+        this.isSidebarOpen = state.isSidebarOpen
+        this.isMobileView = state.isMobileView
+        this.leftMenuWidth = state.leftMenuWidth
+        this.isMenuCollapsed = state.isMenuCollapsed
+        this.logo = state.logo
+        console.log(state)
+      })
   }
 
   ngOnInit() {
@@ -92,7 +97,7 @@ export class MenuClassicLeftComponent implements OnInit {
 
   toggleSettings() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isSidebarOpen: !this.isSidebarOpen,
       }),
     )
@@ -100,7 +105,7 @@ export class MenuClassicLeftComponent implements OnInit {
 
   onCollapse(value: any) {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isMenuCollapsed: value,
       }),
     )

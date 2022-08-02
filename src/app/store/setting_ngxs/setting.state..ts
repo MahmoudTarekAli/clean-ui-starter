@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core'
-import { State, Action, StateContext, Selector } from '@ngxs/store'
+import { State, Action, StateContext } from '@ngxs/store'
 import { SetStateActionNgxs } from './actions'
 import store from 'store'
 import * as actions from './actions'
-import { patch } from '@ngxs/store/operators'
 
 export class SettingStateModel {
   setting: any
@@ -16,7 +15,7 @@ export class SettingStateModel {
       authProvider: 'jwt',
       logo: 'Visual Builder',
       version: 'fluent',
-      theme: 'waves',
+      theme: 'default',
       locale: 'en-US',
       isSidebarOpen: false,
       isSupportChatOpen: false,
@@ -24,10 +23,10 @@ export class SettingStateModel {
       isMobileMenuOpen: false,
       isMenuCollapsed: false,
       isPreselectedOpen: false,
-      preselectedVariant: 'waves',
+      preselectedVariant: 'default',
       menuLayoutType: 'left',
       routerAnimation: 'slide-fadein-up',
-      menuColor: 'dark',
+      menuColor: 'gray',
       authPagesColor: 'gray',
       isAuthTopbar: true,
       primaryColor: '#4b7cf3',
@@ -55,16 +54,13 @@ export class SettingStateModel {
 @Injectable()
 export class SettingState {
   constructor() {}
+
   @Action(SetStateActionNgxs)
   setState(
-    { getState, setState, patchState }: StateContext<SettingStateModel>,
+    { getState, patchState }: StateContext<SettingStateModel>,
     { payload }: SetStateActionNgxs,
   ) {
-    // const key = Object.keys(action.payload)[0]
-    // store.set(`app.settings.${key}`, action.payload[key])
     const state = getState()
-
-    console.log(payload, 'heres')
     return patchState({
       setting: { ...state.setting, ...payload },
     })
