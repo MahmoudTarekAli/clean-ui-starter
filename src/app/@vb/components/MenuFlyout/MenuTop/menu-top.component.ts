@@ -3,10 +3,11 @@ import { Router, NavigationStart } from '@angular/router'
 import { filter } from 'rxjs/operators'
 import { transition, trigger, style, animate } from '@angular/animations'
 import * as _ from 'lodash'
-import { select, Store } from '@ngrx/store'
+import { Select, Store } from '@ngxs/store'
 import { MenuService } from 'src/app/services/menu'
 import * as SettingsActions from 'src/app/store/settings/actions'
 import * as Reducers from 'src/app/store/reducers'
+import { SetStateActionNgxs } from '../../../../store/setting_ngxs/actions'
 
 @Component({
   selector: 'vb-menu-flyout-top',
@@ -44,30 +45,30 @@ export class MenuFlyoutTopComponent implements OnInit {
   flyoutActive: boolean = false
   objectKeys = Object.keys
 
-  constructor(
-    private menuService: MenuService,
-    private store: Store<any>,
-    private router: Router,
-  ) {}
+  constructor(private menuService: MenuService, private store: Store, private router: Router) {}
 
   ngOnInit() {
     this.menuService.getMenuData().subscribe(menuData => (this.menuData = menuData))
-    this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
-      this.logo = state.logo
-      this.version = state.version
-      this.description = state.description
-      this.isMobileView = state.isMobileView
-      this.isMobileMenuOpen = state.isMobileMenuOpen
-      this.isMenuCollapsed = state.isMenuCollapsed
-      this.isMenuUnfixed = state.isMenuUnfixed
-      this.isMenuShadow = state.isMenuShadow
-      this.menuType = state.menuType
-      this.menuColor = state.menuColor
-      this.flyoutMenuColor = state.flyoutMenuColor
-      this.menuLayoutType = state.menuLayoutType
-      this.isSidebarOpen = state.isSidebarOpen
-      this.flyoutActive = !state.isMobileView
-    })
+    this.store
+      .select(state => state.setting)
+      .subscribe(data => {
+        const state = data.setting
+        this.logo = state.logo
+        this.version = state.version
+        this.description = state.description
+        this.isMobileView = state.isMobileView
+        this.isMobileMenuOpen = state.isMobileMenuOpen
+        this.isMenuCollapsed = state.isMenuCollapsed
+        this.isMenuUnfixed = state.isMenuUnfixed
+        this.isMenuShadow = state.isMenuShadow
+        this.menuType = state.menuType
+        this.menuColor = state.menuColor
+        this.flyoutMenuColor = state.flyoutMenuColor
+        this.menuLayoutType = state.menuLayoutType
+        this.isSidebarOpen = state.isSidebarOpen
+        this.flyoutActive = !state.isMobileView
+        console.log(state)
+      })
     this.setActiveItems(this.router.url)
     this.router.events
       .pipe(filter(event => event instanceof NavigationStart))
@@ -78,7 +79,7 @@ export class MenuFlyoutTopComponent implements OnInit {
 
   toggleMobileMenu() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isMobileMenuOpen: !this.isMobileMenuOpen,
       }),
     )
@@ -86,7 +87,7 @@ export class MenuFlyoutTopComponent implements OnInit {
 
   toggleMenu() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isMenuCollapsed: !this.isMenuCollapsed,
       }),
     )
@@ -94,7 +95,7 @@ export class MenuFlyoutTopComponent implements OnInit {
 
   toggleSettings() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isSidebarOpen: !this.isSidebarOpen,
       }),
     )

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core'
-import { select, Store } from '@ngrx/store'
+import { Select, Store } from '@ngxs/store'
 import * as SettingsActions from 'src/app/store/settings/actions'
 import * as Reducers from 'src/app/store/reducers'
+import { SetStateActionNgxs } from '../../../store/setting_ngxs/actions'
+
 const themes: any = require('./configs.json')
 
 @Component({
@@ -16,28 +18,32 @@ export class VariantsComponent {
   isPreselectedOpen
   themeKeys = Object.keys(themes)
 
-  constructor(private store: Store<any>) {
-    this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
-      this.isPreselectedOpen = state.isPreselectedOpen
-      this.version = state.version
-      this.theme = state.theme
-      if (this.preselectedVariant !== state.preselectedVariant) {
-        this.applyVariant(state.preselectedVariant)
-      }
-      this.preselectedVariant = state.preselectedVariant
-      if (state.isPreselectedOpen) {
-        document.getElementsByTagName('html')[0].classList.add('isPreselectedOpen')
-      } else {
-        setTimeout(() => {
-          document.getElementsByTagName('html')[0].classList.remove('isPreselectedOpen')
-        }, 500)
-      }
-    })
+  constructor(private store: Store) {
+    this.store
+      .select(state => state.setting)
+      .subscribe(data => {
+        const state = data.setting
+        this.isPreselectedOpen = state.isPreselectedOpen
+        this.version = state.version
+        this.theme = state.theme
+        if (this.preselectedVariant !== state.preselectedVariant) {
+          this.applyVariant(state.preselectedVariant)
+        }
+        this.preselectedVariant = state.preselectedVariant
+        if (state.isPreselectedOpen) {
+          document.getElementsByTagName('html')[0].classList.add('isPreselectedOpen')
+        } else {
+          setTimeout(() => {
+            document.getElementsByTagName('html')[0].classList.remove('isPreselectedOpen')
+          }, 500)
+        }
+        console.log(state)
+      })
   }
 
   toggleModal() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isPreselectedOpen: !this.isPreselectedOpen,
       }),
     )
@@ -45,7 +51,7 @@ export class VariantsComponent {
 
   settingChange(value, setting) {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         [setting]: value,
       }),
     )
@@ -56,6 +62,6 @@ export class VariantsComponent {
     if (this.theme === 'dark') {
       payload.menuColor = 'dark'
     }
-    this.store.dispatch(new SettingsActions.ChangeSettingBulkAction(payload))
+    this.store.dispatch(new SetStateActionNgxs(payload))
   }
 }

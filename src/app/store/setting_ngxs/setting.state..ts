@@ -56,7 +56,7 @@ export class SettingState {
   constructor() {}
 
   @Action(SetStateActionNgxs)
-  setState(
+  setAppConfig(
     { getState, patchState }: StateContext<SettingStateModel>,
     { payload }: SetStateActionNgxs,
   ) {

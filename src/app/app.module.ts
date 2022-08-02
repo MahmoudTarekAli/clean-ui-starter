@@ -21,6 +21,7 @@ import { default as localeEn } from '@angular/common/locales/en'
 import { NZ_I18N, en_US as localeZorro, en_US } from 'ng-zorro-antd/i18n'
 import { NgxsModule } from '@ngxs/store'
 import { SettingState } from './store/setting_ngxs/setting.state.'
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin'
 
 const LOCALE_PROVIDERS = [{ provide: NZ_I18N, useValue: en_US }]
 registerLocaleData(localeEn, 'en')
@@ -40,6 +41,9 @@ registerLocaleData(localeEn, 'en')
     StoreRouterConnectingModule.forRoot(),
     // ngxs
     NgxsModule.forRoot([SettingState]),
+    NgxsStoragePluginModule.forRoot({
+      key: 'setting',
+    }),
     // nprogress
     NgProgressModule.withConfig({
       thick: true,

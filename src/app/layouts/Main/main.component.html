@@ -22,7 +22,7 @@
       <div class="handler" (click)="toggleMobileMenu()">
         <div class="handlerIcon"></div>
       </div>
-      <nz-drawer [nzClosable]="false" [nzWrapClassName]="'mobileMenu'" [nzVisible]="isMobileMenuOpen" nzPlacement="left"
+      <nz-drawer [nzClosable]="false" [nzWrapClassName]="'mobileMenu'" [nzVisible]="settings.isMobileMenuOpen" nzPlacement="left"
         (nzOnClose)="toggleMobileMenu()">
         <vb-menu-classic-left></vb-menu-classic-left>
       </nz-drawer>

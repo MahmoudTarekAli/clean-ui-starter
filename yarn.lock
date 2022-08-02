@@ -1503,7 +1503,14 @@
   "resolved" "https://registry.npmjs.org/@ngx-translate/core/-/core-12.1.2.tgz"
   "version" "12.1.2"
 
-"@ngxs/store@^3.7.4":
+"@ngxs/storage-plugin@^3.7.4":
+  "integrity" "sha512-LKIcMXAwLJqEnEyNg+Ua1ndEFpSAw3YDPcPfp9Zh5tTPTJ/9wTf5QN2Xp4kIekYEDGMBizf3APAbQJw6Zp/wiA=="
+  "resolved" "https://registry.npmjs.org/@ngxs/storage-plugin/-/storage-plugin-3.7.4.tgz"
+  "version" "3.7.4"
+  dependencies:
+    "tslib" "^1.9.0"
+
+"@ngxs/store@^3.7.4", "@ngxs/store@^3.7.4 || ^3.7.4-dev":
   "integrity" "sha512-/W+sSz4jOkS0ZlxozdQj2+fPhl2rv6Yhbuj3WDqRw++jJ+ZU29blOpfd5lgjc24EH/Dbi0ACZl5IyX1CUbJlNQ=="
   "resolved" "https://registry.npmjs.org/@ngxs/store/-/store-3.7.4.tgz"
   "version" "3.7.4"

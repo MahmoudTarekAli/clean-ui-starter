@@ -1,7 +1,8 @@
 import { Component } from '@angular/core'
-import { select, Store } from '@ngrx/store'
+import { Select, Store } from '@ngxs/store'
 import * as SettingsActions from 'src/app/store/settings/actions'
 import * as Reducers from 'src/app/store/reducers'
+import { SetStateActionNgxs } from '../../../store/setting_ngxs/actions'
 
 @Component({
   selector: 'vb-support-chat',
@@ -11,15 +12,17 @@ import * as Reducers from 'src/app/store/reducers'
 export class SupportChatComponent {
   isSupportChatOpen: boolean
 
-  constructor(private store: Store<any>) {
-    this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
-      this.isSupportChatOpen = state.isSupportChatOpen
-    })
+  constructor(private store: Store) {
+    this.store
+      .select(state => state.setting)
+      .subscribe(state => {
+        this.isSupportChatOpen = state.setting.isSupportChatOpen
+      })
   }
 
   toggle() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isSupportChatOpen: !this.isSupportChatOpen,
       }),
     )

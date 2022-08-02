@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { select, Store } from '@ngrx/store'
+import { Select, Store } from '@ngxs/store'
 import { Observable } from 'rxjs'
 import * as SettingsActions from 'src/app/store/settings/actions'
 import * as Reducers from 'src/app/store/reducers'
 import { slideFadeinUp, slideFadeinRight, zoomFadein, fadein } from '../router-animations'
+import { SetStateActionNgxs } from '../../store/setting_ngxs/actions'
 
 @Component({
   selector: 'layout-main',
@@ -18,10 +19,13 @@ export class LayoutMainComponent implements OnInit {
   touchStartPrev: Number = 0
   touchStartLocked: Boolean = false
 
-  constructor(private store: Store<any>) {
-    this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
-      this.settings = state
-    })
+  constructor(private store: Store) {
+    this.store
+      .select(state => state.setting)
+      .subscribe(state => {
+        this.settings = state.setting
+        console.log(state.setting)
+      })
   }
 
   ngOnInit() {
@@ -30,7 +34,7 @@ export class LayoutMainComponent implements OnInit {
 
   onCollapse(value: any) {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isMenuCollapsed: value,
       }),
     )
@@ -38,15 +42,16 @@ export class LayoutMainComponent implements OnInit {
 
   toggleCollapsed() {
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isMenuCollapsed: !this.settings.isMenuCollapsed,
       }),
     )
   }
 
   toggleMobileMenu() {
+    console.log(this.settings.isMobileMenuOpen)
     this.store.dispatch(
-      new SettingsActions.SetStateAction({
+      new SetStateActionNgxs({
         isMobileMenuOpen: !this.settings.isMobileMenuOpen,
       }),
     )

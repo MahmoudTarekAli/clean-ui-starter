@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
               }
               console.log(key, value)
               this.store.dispatch(
-                new SettingsActions.SetStateAction({
+                new SetStateActionNgxs({
                   [key]: value,
                 }),
               )
