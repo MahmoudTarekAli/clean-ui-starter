@@ -37,7 +37,7 @@ export class KitAntdModalExampleComponent {
       nzTitle: 'Are you sure delete this task?',
       nzContent: '<b style="color: red;">Some descriptions</b>',
       nzOkText: 'Yes',
-      nzOkType: 'danger',
+      nzOkType: 'primary',
       nzOnOk: () => console.log('OK'),
       nzCancelText: 'No',
       nzOnCancel: () => console.log('Cancel'),

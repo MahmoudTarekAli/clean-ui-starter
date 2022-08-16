@@ -23,7 +23,6 @@ import { NgxsModule } from '@ngxs/store'
 import { SettingState } from './store/setting_ngxs/setting.state.'
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin'
 
-const LOCALE_PROVIDERS = [{ provide: NZ_I18N, useValue: en_US }]
 registerLocaleData(localeEn, 'en')
 
 @NgModule({
@@ -55,7 +54,7 @@ registerLocaleData(localeEn, 'en')
   ],
   providers: [
     // locale providers
-    ...LOCALE_PROVIDERS,
+    { provide: NZ_I18N, useValue: en_US },
   ],
   bootstrap: [AppComponent],
 })

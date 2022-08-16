@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import qs from 'qs'
+import * as qs from 'qs'
 import { Router, NavigationEnd, ActivatedRoute, NavigationStart } from '@angular/router'
 import { Title } from '@angular/platform-browser'
 import { filter, map, mergeMap } from 'rxjs/operators'
