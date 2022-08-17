@@ -33,6 +33,7 @@ export class MenuClassicLeftComponent implements OnInit {
       .subscribe(data => {
         const state = data.setting
         this.menuColor = state.menuColor
+        console.log(this.menuColor)
         this.isMenuShadow = state.isMenuShadow
         this.isMenuUnfixed = state.isMenuUnfixed
         this.isSidebarOpen = state.isSidebarOpen

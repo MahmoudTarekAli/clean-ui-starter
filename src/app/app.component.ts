@@ -98,38 +98,38 @@ export class AppComponent implements OnInit {
       })
 
     // listen url query params and set them to ngrx store
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationStart))
-      .subscribe((event: NavigationStart) => {
-        const queryString = event.url.match(/\?(.*)/)
-        if (queryString) {
-          const queryParams = qs.parse(queryString[1])
-          console.log(queryParams)
-          const keys = Object.keys(queryParams)
-          if (keys.length) {
-            keys.forEach(key => {
-              let value
-              switch (queryParams[key]) {
-                case 'false':
-                  value = false
-                  break
-                case 'true':
-                  value = true
-                  break
-                default:
-                  value = queryParams[key]
-                  break
-              }
-              console.log(key, value)
-              this.store.dispatch(
-                new SetStateActionNgxs({
-                  [key]: value,
-                }),
-              )
-            })
-          }
-        }
-      })
+    // this.router.events
+    //   .pipe(filter(event => event instanceof NavigationStart))
+    //   .subscribe((event: NavigationStart) => {
+    //     const queryString = event.url.match(/\?(.*)/)
+    //     if (queryString) {
+    //       const queryParams = qs.parse(queryString[1])
+    //       console.log(queryParams)
+    //       const keys = Object.keys(queryParams)
+    //       if (keys.length) {
+    //         keys.forEach(key => {
+    //           let value
+    //           switch (queryParams[key]) {
+    //             case 'false':
+    //               value = false
+    //               break
+    //             case 'true':
+    //               value = true
+    //               break
+    //             default:
+    //               value = queryParams[key]
+    //               break
+    //           }
+    //           console.log(key, value)
+    //           this.store.dispatch(
+    //             new SetStateActionNgxs({
+    //               [key]: value,
+    //             }),
+    //           )
+    //         })
+    //       }
+    //     }
+    //   })
 
     // detecting & set mobile/tablet/desktop viewports
     const setViewPort = (isMobileView: any = false, isTabletView: any = false) => {

@@ -26,7 +26,7 @@ export class SettingStateModel {
       preselectedVariant: 'default',
       menuLayoutType: 'left',
       routerAnimation: 'slide-fadein-up',
-      menuColor: 'gray',
+      menuColor: 'dark',
       authPagesColor: 'gray',
       isAuthTopbar: true,
       primaryColor: '#4b7cf3',
@@ -61,6 +61,7 @@ export class SettingState {
     { payload }: SetStateActionNgxs,
   ) {
     const state = getState()
+    console.log(state)
     return patchState({
       setting: { ...state.setting, ...payload },
     })

@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import 'assets/fonts/font-feathericons/dist/feather.css';
+@import 'assets/fonts/font-linearicons/style.css';
+@import 'assets/fonts/font-icomoon/style.css';
+@import 'assets/fonts/font-awesome/css/font-awesome.min.css';
 
 li {
   outline: 0;
@@ -45,7 +48,6 @@ li {
   margin-bottom: 10px !important;
 }
 
-
 .site-page-header {
   border: 1px solid #ebedf0;
 }
@@ -65,26 +67,25 @@ body {
 }
 
 .ant-picker-calendar-header .ant-picker-calendar-mode-switch {
-  label[nzvalue=year] {
+  label[nzvalue='year'] {
     display: none;
   }
 
-  label[nzvalue=month] {
+  label[nzvalue='month'] {
     display: none;
   }
 }
 
 .cal-month-view .cal-day-cell.cal-in-month.cal-has-events {
   cursor: pointer;
-  background: #D9E4FF;
+  background: #d9e4ff;
 }
 
 .cal-month-view .cal-day-badge {
   background-color: #1c095d !important;
 }
 
-
 .cal-day-selected,
 .cal-day-selected:hover {
-  background-color: #35da46 !important
+  background-color: #35da46 !important;
 }

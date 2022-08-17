@@ -88,7 +88,7 @@
     "sass": "^1.32.11",
     "sortablejs": "^1.10.2",
     "store": "^2.0.12",
-    "tslib": "^2.0.0",
+    "tslib": "^2.4.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
