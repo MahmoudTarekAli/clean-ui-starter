@@ -103,10 +103,9 @@
               },
               "outputHashing": "all",
               "sourceMap": true,
-              "namedChunks": false,
-              "aot": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
               "buildOptimizer": false,
               "fileReplacements": [
                 {
@@ -135,8 +134,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "defaultConfiguration": "",
           "options": {
-            "browserTarget": "visualbuilder:build"
+            "browserTarget": "visualbuilder:build:dev"
           },
           "configurations": {
             "production": {

@@ -16,31 +16,31 @@ import { SharedModule } from './shared/shared.module'
 // VB:REPLACE-END:ROUTER-IMPORTS
 
 const routes: Routes = [
-  {
-    path: '',
-    // VB:REPLACE-NEXT-LINE:ROUTER-REDIRECT
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
-    component: LayoutMainComponent,
-    canActivate: [],
-    children: [
-      // VB:REPLACE-START:ROUTER-CONFIG
-      {
-        path: 'dashboard',
-        data: { title: 'Dashboard' },
-        component: DashboardComponent,
-      },
-
-      // VB:REPLACE-END:ROUTER-CONFIG
-    ],
-  },
-  {
-    path: '**',
-    redirectTo: '/auth/404',
-  },
+  // {
+  //   path: '',
+  //   // VB:REPLACE-NEXT-LINE:ROUTER-REDIRECT
+  //   redirectTo: 'dashboard',
+  //   pathMatch: 'full',
+  // },
+  // {
+  //   path: '',
+  //   component: LayoutMainComponent,
+  //   canActivate: [],
+  //   children: [
+  //     // VB:REPLACE-START:ROUTER-CONFIG
+  //     {
+  //       path: 'dashboard',
+  //       data: { title: 'Dashboard' },
+  //       component: DashboardComponent,
+  //     },
+  //
+  //     // VB:REPLACE-END:ROUTER-CONFIG
+  //   ],
+  // },
+  // {
+  //   path: '**',
+  //   redirectTo: '/auth/404',
+  // },
 ]
 
 @NgModule({
@@ -50,11 +50,11 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes, {
       useHash: true,
-      preloadingStrategy: AppPreloader,
+      // preloadingStrategy: AppPreloader,
       relativeLinkResolution: 'legacy',
     }),
-    LayoutsModule,
-    WidgetsComponentsModule,
+    // LayoutsModule,
+    // WidgetsComponentsModule,
   ],
   declarations: [
     // VB:REPLACE-START:ROUTER-DECLARATIONS
