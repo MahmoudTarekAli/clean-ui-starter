@@ -93,7 +93,14 @@
               ]
             },
             "dev": {
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all",
               "sourceMap": true,
               "namedChunks": false,
@@ -132,7 +139,6 @@
             "browserTarget": "visualbuilder:build"
           },
           "configurations": {
-
             "production": {
               "browserTarget": "visualbuilder:build:production"
             },
